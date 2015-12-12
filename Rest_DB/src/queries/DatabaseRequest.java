@@ -10,18 +10,29 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.StringJoiner;
+import java.util.StringTokenizer;
 
-@WebServlet("/database")
-public class Query extends HttpServlet
+@WebServlet("/database/*")
+public class DatabaseRequest extends HttpServlet
 {
     @Override
     protected void doGet(HttpServletRequest p_request, HttpServletResponse p_response) throws ServletException, IOException
     {
+    	String pathInfo = p_request.getPathInfo();
+    	
+    	StringTokenizer stringTokenizer = new StringTokenizer(pathInfo, "/");
+    	
+    	String dbName = stringTokenizer.nextToken();
+    	String collectionName = stringTokenizer.nextToken();
+    	
+    	
+    	
         Map<String, String[]> parameterMap = p_request.getParameterMap();
         PrintWriter printWriter = p_response.getWriter();
         printWriter.print(showParameters(parameterMap));
         printWriter.flush();
     }
+    
 
     private String showParameters(Map<String, String[]> p_parameterMap)
     {
