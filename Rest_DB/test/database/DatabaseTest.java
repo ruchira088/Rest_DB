@@ -1,23 +1,20 @@
 package database;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
-import database.Constants;
-import org.junit.Assert;
+import java.util.HashMap;
+import java.util.HashSet;
+
 import org.junit.Test;
 
-import java.net.UnknownHostException;
-import java.util.HashSet;
-import java.util.Set;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.util.JSON;
+
+import queries.Query;
 
 public class DatabaseTest
 {
     @Test
-    public void something()
+    public void query()
     {
 /*        MongoClient mongoClient = null;
 
@@ -43,10 +40,40 @@ public class DatabaseTest
         
         System.out.println(cursor.next());*/
     	
-    	MongoDatabase mongoDatabase = new MongoDatabase();
-    	HashSet<DBObject> results = mongoDatabase.doQuery("CardGame", "users", "username", "cat");
+    	MongoDatabaseServer mongoDatabase = new MongoDatabaseServer();
+    	
+    	HashMap<String,String> hashMap = new HashMap<String, String>();
+    	hashMap.put("username", "jenny");
+    	
+    	//HashSet<DBObject> results = mongoDatabase.doQuery("CardGame", "users", "username", "jenny");
+    	HashSet<DBObject> results = mongoDatabase.doQuery(new Query("CardGame", "users", new BasicDBObject(hashMap)));
     	
     	System.out.println(results.toString());
-
     }
+    
+    @Test
+    public void JsonTest()
+    {
+//    	HashMap<String,String[]> hashMap = new HashMap<String, String[]>();
+//    	hashMap.put("colour", new String[]{"white", "ginger"});
+//    	hashMap.put("name", new String[]{"Jenny"});
+//    	
+//    	JSONObject jsonObject = new JSONObject(hashMap);
+//    	System.out.println(jsonObject.toString());
+//    	System.out.println(StandardCharsets.UTF_8.name());
+    	String JsonString = "{\"colour\":[\"white\",\"ginger\"],\"name\":\"Jenny\"}";
+    	
+    	Object object = JSON.parse(JsonString);
+    	System.out.println(object.getClass());
+    	System.out.println(object);
+    	
+    	JsonString = "{\"name\":\"Jenny\"}";
+    	
+    	object = JSON.parse(JsonString);
+    	System.out.println(object.getClass());
+    	System.out.println(object);
+    	
+    }
+    
+    
 }
