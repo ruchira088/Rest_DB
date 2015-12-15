@@ -20,6 +20,7 @@ import javax.ws.rs.core.MediaType;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 import com.mongodb.DBObject;
+import com.mongodb.util.JSON;
 
 import database.MongoDatabaseServer;
 
@@ -31,10 +32,10 @@ public class DatabaseRequest extends HttpServlet
 	protected void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
 			throws ServletException, IOException 
 	{
-		Query query = new Query(p_request);
+		GetQuery getQuery = new GetQuery(p_request);
 		
 		MongoDatabaseServer mongoDatabase = new MongoDatabaseServer();
-		HashSet<DBObject> results = mongoDatabase.doQuery(query);
+		HashSet<DBObject> results = mongoDatabase.doQuery(getQuery);
 		
 		p_response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		p_response.setContentType(MediaType.APPLICATION_JSON);
@@ -49,19 +50,11 @@ public class DatabaseRequest extends HttpServlet
 	@Override
 	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response) throws ServletException, IOException 
 	{
-		ServletInputStream inputStream = p_request.getInputStream();
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-		int copy = IOUtils.copy(inputStream, outputStream);
+		PostQuery postQuery = new PostQuery(p_request);
 		
-		
-		System.out.println(outputStream.toString());
-		
-		Query query = new Query(p_request);
-		
-		System.out.println(query.getDatabaseName());
-		System.out.println(query.getCollectionName());
-		System.out.println(query.getQueryValues());
+		System.out.println(postQuery.getDatabaseName());
+		System.out.println(postQuery.getCollectionName());
+		System.out.println(postQuery.getQueryValues());
 		
 	}
 

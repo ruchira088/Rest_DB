@@ -1,14 +1,15 @@
 package queries;
 
-import java.util.Map;
+import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import com.mongodb.BasicDBObject;
 
-public class Query 
+public abstract class Query 
 {
 	private static final String DELIMITER = "/";
 	
@@ -17,6 +18,19 @@ public class Query
 	private String m_collectionName = null;
 	
 	private BasicDBObject m_queryValues = new BasicDBObject();
+		
+	/**
+	 * Creates a {@link BasicDBObject} object from the request.
+	 * 
+	 * @param p_request
+	 * 	The HTTP servlet request
+	 * 
+	 * @return
+	 * 	{@link BasicDBObject} created from the request.
+	 */
+	protected abstract BasicDBObject createBasicDBObject(HttpServletRequest p_request);
+	
+	protected abstract HttpMethod getHttpMethod();
 	
 	public Query(HttpServletRequest p_request)
 	{
@@ -47,37 +61,7 @@ public class Query
 			}
 		}
 		
-		m_queryValues = createBasicDBObject(p_request.getParameterMap());
-	}
-	
-	/**
-	 * Creates a {@link BasicDBObject} object from the parameter map.
-	 * 
-	 * @param p_parameterMap
-	 * 	The parameter map
-	 * 
-	 * @return
-	 * 	{@link BasicDBObject} created from the parameter map
-	 */
-	private BasicDBObject createBasicDBObject(Map<String, String[]> p_parameterMap) 
-	{	
-		BasicDBObject basicDBObject = new BasicDBObject();
-		
-		for (String key: p_parameterMap.keySet())
-		{
-			String[] values = p_parameterMap.get(key);
-			
-			if(values.length > 1)
-			{
-				basicDBObject.put(key, values);
-			} 
-			else
-			{
-				basicDBObject.put(key, values[0]);
-			}
-		}
-
-		return basicDBObject;
+		m_queryValues = createBasicDBObject(p_request);
 	}
 
 	public String getDatabaseName() 

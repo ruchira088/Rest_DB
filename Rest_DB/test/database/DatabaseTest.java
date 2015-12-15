@@ -10,6 +10,7 @@ import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
 import queries.Query;
+import queries.GetQuery;
 
 public class DatabaseTest
 {
@@ -46,7 +47,7 @@ public class DatabaseTest
     	hashMap.put("username", "jenny");
     	
     	//HashSet<DBObject> results = mongoDatabase.doQuery("CardGame", "users", "username", "jenny");
-    	HashSet<DBObject> results = mongoDatabase.doQuery(new Query("CardGame", "users", new BasicDBObject(hashMap)));
+    	HashSet<DBObject> results = mongoDatabase.doQuery(new GetQuery("CardGame", "users", new BasicDBObject(hashMap)));
     	
     	System.out.println(results.toString());
     }
