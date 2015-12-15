@@ -10,7 +10,7 @@ public class PostQuery extends DataQuery
 	}
 
 	@Override
-	protected HttpMethod getHttpMethod()
+	public HttpMethod getHttpMethod()
 	{
 		return HttpMethod.POST;
 	}

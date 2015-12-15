@@ -112,7 +112,7 @@ public class MongoDatabaseServer
      * @return
      * 	The {@link DBCollection}
      */
-    private DBCollection getDBCollection(String p_dbName, String p_collectionName)
+    public DBCollection getDBCollection(String p_dbName, String p_collectionName)
     {
     	return getDB(p_dbName).getCollection(p_collectionName);
     }

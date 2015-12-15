@@ -42,7 +42,7 @@ public class GetQuery extends Query
 	}
 
 	@Override
-	protected HttpMethod getHttpMethod()
+	public HttpMethod getHttpMethod()
 	{
 		return HttpMethod.GET;
 	}

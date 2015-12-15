@@ -1,4 +1,4 @@
-package queries;
+package queries.handlers;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -8,8 +8,9 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
 import database.Constants;
+import queries.GetQuery;
 
-public class GetQueryHandler extends QueryHandler
+public class GetQueryHandler extends QueryHandler<GetQuery>
 {
 	private GetQuery m_getQuery;
 	
@@ -19,9 +20,9 @@ public class GetQueryHandler extends QueryHandler
 	}
 
 	@Override
-	public Set<DBObject> performQuery(DBCollection p_dbCollection)
+	protected Set<DBObject> execute(DBCollection p_dbCollection)
 	{
-		DBCursor dbCursor = p_dbCollection.find(m_getQuery.getQueryValues());
+		DBCursor dbCursor = p_dbCollection.find(getQuery().getQueryValues());
     	
     	HashSet<DBObject> results = new HashSet<DBObject>();
     	
@@ -33,5 +34,11 @@ public class GetQueryHandler extends QueryHandler
     	}
     	
     	return results;
-    }
+	}
+
+	@Override
+	protected GetQuery getQuery()
+	{
+		return m_getQuery;
+	}
 }

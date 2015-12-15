@@ -30,7 +30,7 @@ public abstract class Query
 	 */
 	protected abstract BasicDBObject createBasicDBObject(HttpServletRequest p_request);
 	
-	protected abstract HttpMethod getHttpMethod();
+	public abstract HttpMethod getHttpMethod();
 	
 	public Query(HttpServletRequest p_request)
 	{
