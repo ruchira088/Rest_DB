@@ -19,71 +19,37 @@ import com.mongodb.DBObject;
 
 import queries.GetQuery;
 import queries.PostQuery;
+import queries.Query;
 import queries.handlers.QueryHandler;
 
 @WebServlet("/database/*")
-@MultipartConfig
 public class DatabaseRequest extends HttpServlet 
 {
 	@Override
 	protected void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
 			throws ServletException, IOException 
 	{
-		GetQuery getQuery = new GetQuery(p_request);
-		
-		QueryHandler queryHandler = QueryHandler.getQueryHandler(getQuery);
+		GetQuery getQuery = new GetQuery(p_request);		
+		createResponse(p_response, getQuery);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response) throws ServletException, IOException 
+	{
+		PostQuery postQuery = new PostQuery(p_request);		
+		createResponse(p_response, postQuery);
+	}
+	
+	private void createResponse(HttpServletResponse p_response, Query p_query) throws IOException 
+	{
+		QueryHandler<?> queryHandler = QueryHandler.getQueryHandler(p_query);
 		Set<DBObject> results = queryHandler.performQuery();
-		
 		
 		p_response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		p_response.setContentType(MediaType.APPLICATION_JSON);
 		
 		PrintWriter printWriter = p_response.getWriter();
 		printWriter.println(results);
-		printWriter.flush();		
+		printWriter.flush();
 	}
-
-	@Override
-	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response) throws ServletException, IOException 
-	{
-		PostQuery postQuery = new PostQuery(p_request);
-		
-		System.out.println(postQuery.getDatabaseName());
-		System.out.println(postQuery.getCollectionName());
-		System.out.println(postQuery.getQueryValues());
-		
-	}
-
-
-
-	/**
-	 * Creates a JSON parameter map.
-	 * 
-	 * @param p_parameterMap
-	 * 	The parameter map
-	 * 
-	 * @return
-	 * 	JSON parameter map
-	 */
-	private Map<String, ?> createJsonParameterMap(Map<String, String[]> p_parameterMap) 
-	{		
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		
-		for (String key: p_parameterMap.keySet())
-		{
-			String[] values = p_parameterMap.get(key);
-			
-			if(values.length > 1)
-			{
-				hashMap.put(key, values);
-			} 
-			else
-			{
-				hashMap.put(key, values[0]);
-			}
-		}
-		
-		return hashMap;
-	}
-
 }

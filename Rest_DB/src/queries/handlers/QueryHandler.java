@@ -19,6 +19,7 @@ public abstract class QueryHandler<T extends Query>
 	static
 	{
 		s_queryMappings.put(HttpMethod.GET, GetQueryHandler.class);
+		s_queryMappings.put(HttpMethod.POST, PostQueryHandler.class);
 	}	
 	
 	protected abstract T getQuery();
