@@ -21,18 +21,22 @@ public abstract class UpdateQuery extends DataQuery
 	{
 		Object object = getParameterMapValues().get(Constants.SELECTOR_KEY);
 		
-		if(object instanceof String[])
+		if(object != null)
 		{
-			String[] values = (String[]) object;
-			
-			for(String value : values)
+			if(object instanceof String[])
 			{
-				m_updateSelectors.add(value);
-			}
-		} else
-		{
-			m_updateSelectors.add(object.toString());
+				String[] values = (String[]) object;
+				
+				for(String value : values)
+				{
+					m_updateSelectors.add(value);
+				}
+			} else
+			{
+				m_updateSelectors.add(object.toString());
+			}			
 		}
+		
 	}
 	
 	public Set<String> getUpdateSelectors()

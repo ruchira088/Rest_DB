@@ -42,6 +42,7 @@ public class DatabaseRequest extends HttpServlet
 	protected void doPut(HttpServletRequest p_request, HttpServletResponse p_response) throws ServletException, IOException 
 	{
 		PutQuery putQuery = new PutQuery(p_request);
+		createResponse(p_response, putQuery);
 		
 	}
 	

@@ -8,15 +8,12 @@ import queries.types.UpdateQuery;
 
 public abstract class UpdateQueryHandler<T extends UpdateQuery> extends DataQueryHandler<T>
 {
-	private BasicDBObject m_selectorObject;
-	
-	public UpdateQueryHandler()
-	{
-		init();
-	}
+	private BasicDBObject m_selectorObject = null;
 
 	private void init() 
 	{
+		m_selectorObject = new BasicDBObject();
+		
 		Set<String> updateSelectors = getQuery().getUpdateSelectors();
 		BasicDBObject queryValues = getQuery().getQueryValues();
 		
@@ -28,6 +25,11 @@ public abstract class UpdateQueryHandler<T extends UpdateQuery> extends DataQuer
 	
 	protected BasicDBObject getSelectorObject()
 	{
+		if(m_selectorObject == null)
+		{
+			init();
+		}
+		
 		return m_selectorObject;
 	}
 }
