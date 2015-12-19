@@ -1,10 +1,13 @@
-package queries;
+package queries.types;
 
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.mongodb.BasicDBObject;
+
+import general.DBUtils;
+import queries.HttpMethod;
 
 public class GetQuery extends Query
 {
@@ -21,24 +24,8 @@ public class GetQuery extends Query
 	protected BasicDBObject createBasicDBObject(HttpServletRequest p_request) 
 	{	
 		Map<String, String[]> parameterMap = p_request.getParameterMap();
-		
-		BasicDBObject basicDBObject = new BasicDBObject();
-		
-		for (String key: parameterMap.keySet())
-		{
-			String[] values = parameterMap.get(key);
-			
-			if(values.length > 1)
-			{
-				basicDBObject.put(key, values);
-			} 
-			else
-			{
-				basicDBObject.put(key, values[0]);
-			}
-		}
 
-		return basicDBObject;
+		return DBUtils.createBasicDBObject(parameterMap);
 	}
 
 	@Override

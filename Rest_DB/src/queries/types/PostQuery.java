@@ -1,6 +1,8 @@
-package queries;
+package queries.types;
 
 import javax.servlet.http.HttpServletRequest;
+
+import queries.HttpMethod;
 
 public class PostQuery extends DataQuery
 {

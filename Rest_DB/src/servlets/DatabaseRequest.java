@@ -3,12 +3,9 @@ package servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,10 +14,11 @@ import javax.ws.rs.core.MediaType;
 
 import com.mongodb.DBObject;
 
-import queries.GetQuery;
-import queries.PostQuery;
-import queries.Query;
 import queries.handlers.QueryHandler;
+import queries.types.GetQuery;
+import queries.types.PostQuery;
+import queries.types.PutQuery;
+import queries.types.Query;
 
 @WebServlet("/database/*")
 public class DatabaseRequest extends HttpServlet 
@@ -38,6 +36,13 @@ public class DatabaseRequest extends HttpServlet
 	{
 		PostQuery postQuery = new PostQuery(p_request);		
 		createResponse(p_response, postQuery);
+	}
+	
+	@Override
+	protected void doPut(HttpServletRequest p_request, HttpServletResponse p_response) throws ServletException, IOException 
+	{
+		PutQuery putQuery = new PutQuery(p_request);
+		
 	}
 	
 	private void createResponse(HttpServletResponse p_response, Query p_query) throws IOException 

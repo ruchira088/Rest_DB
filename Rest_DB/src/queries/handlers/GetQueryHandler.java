@@ -7,18 +7,11 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
-import database.Constants;
-import queries.GetQuery;
+import general.Constants;
+import queries.types.GetQuery;
 
 public class GetQueryHandler extends QueryHandler<GetQuery>
 {
-	private GetQuery m_getQuery;
-	
-	public GetQueryHandler(GetQuery p_getQuery)
-	{
-		m_getQuery = p_getQuery;
-	}
-
 	@Override
 	protected Set<DBObject> execute(DBCollection p_dbCollection)
 	{
@@ -29,16 +22,10 @@ public class GetQueryHandler extends QueryHandler<GetQuery>
     	while(dbCursor.hasNext())
     	{
     		DBObject dbObject = dbCursor.next();
-    		dbObject.removeField(Constants.ID_FIELD);
+    		dbObject.removeField(Constants.ID_KEY);
     		results.add(dbObject);
     	}
     	
     	return results;
-	}
-
-	@Override
-	protected GetQuery getQuery()
-	{
-		return m_getQuery;
 	}
 }

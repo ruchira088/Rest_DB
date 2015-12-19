@@ -9,8 +9,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
-import queries.Query;
-import queries.GetQuery;
+import queries.types.GetQuery;
 
 public class DatabaseTest
 {

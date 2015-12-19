@@ -1,13 +1,13 @@
-package queries;
+package queries.types;
 
-import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import com.mongodb.BasicDBObject;
+
+import queries.HttpMethod;
 
 public abstract class Query 
 {

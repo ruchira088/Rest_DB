@@ -9,7 +9,8 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
-import queries.Query;
+import general.Constants;
+import queries.types.Query;
 
 public class MongoDatabaseServer
 {
@@ -152,7 +153,7 @@ public class MongoDatabaseServer
     	while(dbCursor.hasNext())
     	{
     		DBObject dbObject = dbCursor.next();
-    		dbObject.removeField(Constants.ID_FIELD);
+    		dbObject.removeField(Constants.ID_KEY);
     		results.add(dbObject);
     	}
     	

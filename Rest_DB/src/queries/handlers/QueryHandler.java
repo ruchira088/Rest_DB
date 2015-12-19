@@ -1,29 +1,19 @@
 package queries.handlers;
 
-import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
 import java.util.Set;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 
 import database.MongoDatabaseServer;
-import queries.HttpMethod;
-import queries.Query;
+import queries.types.Query;
 
 public abstract class QueryHandler<T extends Query>
-{
-	public static Map<HttpMethod, Class<? extends QueryHandler<?>>> s_queryMappings = new HashMap<HttpMethod, Class<? extends QueryHandler<?>>>();
+{	
+	private Query m_query = null;
 	
-	static
-	{
-		s_queryMappings.put(HttpMethod.GET, GetQueryHandler.class);
-		s_queryMappings.put(HttpMethod.POST, PostQueryHandler.class);
-	}	
-	
-	protected abstract T getQuery();
-
 	protected abstract Set<DBObject> execute(DBCollection p_dbCollection);
 	
 	public Set<DBObject> performQuery()
@@ -31,8 +21,20 @@ public abstract class QueryHandler<T extends Query>
 		MongoDatabaseServer mongoDatabase = new MongoDatabaseServer();
 		DBCollection dbCollection = mongoDatabase.getDBCollection(getQuery().getDatabaseName(), getQuery().getCollectionName());
 		
-		Set<DBObject> results = execute(dbCollection);
-		mongoDatabase.close();
+		Set<DBObject> results = null;
+		
+		try
+		{
+			results = execute(dbCollection);
+		}
+		catch(Exception exception)
+		{
+			results = createFailResult();
+		}
+		finally
+		{
+			mongoDatabase.close();			
+		}
 		
 		return results;
 	}
@@ -40,13 +42,12 @@ public abstract class QueryHandler<T extends Query>
 	public static <Q extends Query, H extends QueryHandler<?>> QueryHandler<?> getQueryHandler(Q p_query)
 	{		
 		H queryHandler = null;
-		
-		Class<? extends QueryHandler<?>> queryHandlerClass = s_queryMappings.get(p_query.getHttpMethod());
+		Class<? extends QueryHandler<?>> queryHandlerClass = p_query.getHttpMethod().getQueryHandler();
 		
 		try
 		{
-			Constructor<? extends QueryHandler<?>> constructor = queryHandlerClass.getConstructor(p_query.getClass());
-			queryHandler = (H) constructor.newInstance(p_query);
+			queryHandler = (H) queryHandlerClass.newInstance();
+			queryHandler.setQuery(p_query);
 		}
 		catch (Exception exception)
 		{
@@ -54,5 +55,23 @@ public abstract class QueryHandler<T extends Query>
 			exception.printStackTrace();
 		}
 		return queryHandler;
+	}
+	
+	protected Set<DBObject> createFailResult()
+	{
+		Set<DBObject> resultSet = new HashSet<DBObject>();
+		resultSet.add(new BasicDBObject("result", "fail"));
+	
+		return resultSet;
+	}
+
+	protected void setQuery(Query p_query)
+	{
+		m_query = p_query;
+	}
+	
+	protected T getQuery()
+	{
+		return (T) m_query;
 	}
 }

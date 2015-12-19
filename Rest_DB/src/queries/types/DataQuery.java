@@ -1,4 +1,4 @@
-package queries;
+package queries.types;
 
 import java.io.ByteArrayOutputStream;
 
@@ -10,11 +10,16 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import com.mongodb.BasicDBObject;
 import com.mongodb.util.JSON;
 
+import general.DBUtils;
+
 public abstract class DataQuery extends Query
 {
+	private BasicDBObject m_parameterMapValues = null;
+	
 	public DataQuery(HttpServletRequest p_request)
 	{
 		super(p_request);
+		init(p_request);
 	}
 
 	@Override
@@ -28,7 +33,7 @@ public abstract class DataQuery extends Query
 			ServletInputStream inputStream = p_request.getInputStream();
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-			int copy = IOUtils.copy(inputStream, outputStream);
+			IOUtils.copy(inputStream, outputStream);
 			JsonString = outputStream.toString();
 
 			basicDBObject = (BasicDBObject) JSON.parse(JsonString);
@@ -41,5 +46,15 @@ public abstract class DataQuery extends Query
 		}
 		
 		return basicDBObject;
+	}
+	
+	private void init(HttpServletRequest p_request)
+	{
+		m_parameterMapValues = DBUtils.createBasicDBObject(p_request.getParameterMap());
+	}
+	
+	public BasicDBObject getParameterMapValues()
+	{
+		return m_parameterMapValues;
 	}
 }
