@@ -1,13 +1,14 @@
 package queries;
 
 import queries.handlers.GetQueryHandler;
+import queries.handlers.PatchQueryHandler;
 import queries.handlers.PostQueryHandler;
 import queries.handlers.PutQueryHandler;
 import queries.handlers.QueryHandler;
 
 public enum HttpMethod 
 {
-	GET(GetQueryHandler.class), POST(PostQueryHandler.class), PUT(PutQueryHandler.class);
+	GET(GetQueryHandler.class), POST(PostQueryHandler.class), PUT(PutQueryHandler.class), PATCH(PatchQueryHandler.class);
 
 	private Class<? extends QueryHandler<?>> m_queryHandler;
 
