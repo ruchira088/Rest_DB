@@ -10,8 +10,15 @@ import com.mongodb.DBObject;
 
 import queries.types.PatchQuery;
 
+/**
+ * Handler for PATCH requests.
+ * 
+ */
 public class PatchQueryHandler extends UpdateQueryHandler<PatchQuery>
 {
+	/**
+	 * {@link QueryHandler#execute(DBCollection)}
+	 */
 	@Override
 	protected Set<DBObject> execute(DBCollection p_dbCollection) 
 	{

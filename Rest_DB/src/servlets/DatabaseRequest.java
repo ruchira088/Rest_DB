@@ -10,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.MediaType;
 
 import com.mongodb.DBObject;
@@ -72,7 +71,32 @@ public class DatabaseRequest extends HttpServlet
 		p_response.setContentType(MediaType.APPLICATION_JSON);
 		
 		PrintWriter printWriter = p_response.getWriter();
-		printWriter.println(results);
+		
+		if(p_query instanceof GetQuery)
+		{
+			printWriter.println(formatResults(results));			
+		}
+		else
+		{
+			printWriter.println(results.iterator().next());
+		}
+		
 		printWriter.flush();
+	}
+	
+	private String formatResults(Set<DBObject> p_results)
+	{
+		StringBuilder resultsBuilder = new StringBuilder();
+		
+		resultsBuilder.append("{");
+		resultsBuilder.append("\"results\" : ");
+		resultsBuilder.append(p_results);
+		resultsBuilder.append(",");
+		resultsBuilder.append("\"count\" : ");
+		resultsBuilder.append(p_results.size());
+		resultsBuilder.append("}");
+		
+		return resultsBuilder.toString();
+		
 	}
 }

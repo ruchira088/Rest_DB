@@ -1,15 +1,10 @@
 package database;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 import org.junit.Test;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
-
-import queries.types.GetQuery;
 
 public class DatabaseTest
 {
@@ -46,9 +41,9 @@ public class DatabaseTest
     	hashMap.put("username", "jenny");
     	
     	//HashSet<DBObject> results = mongoDatabase.doQuery("CardGame", "users", "username", "jenny");
-    	HashSet<DBObject> results = mongoDatabase.doQuery(new GetQuery("CardGame", "users", new BasicDBObject(hashMap)));
-    	
-    	System.out.println(results.toString());
+//    	HashSet<DBObject> results = mongoDatabase.doQuery(new GetQuery("CardGame", "users", new BasicDBObject(hashMap)));
+//    	
+//    	System.out.println(results.toString());
     }
     
     @Test

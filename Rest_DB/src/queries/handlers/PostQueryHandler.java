@@ -7,8 +7,15 @@ import com.mongodb.DBObject;
 
 import queries.types.PostQuery;
 
+/**
+ *	Handler for POST requests.
+ *
+ */
 public class PostQueryHandler extends DataQueryHandler<PostQuery>
 {
+	/**
+	 * {@link QueryHandler#execute(DBCollection)}
+	 */
 	@Override
 	protected Set<DBObject> execute(DBCollection p_dbCollection)
 	{

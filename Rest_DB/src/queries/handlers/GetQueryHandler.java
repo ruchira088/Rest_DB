@@ -10,8 +10,15 @@ import com.mongodb.DBObject;
 import general.Constants;
 import queries.types.GetQuery;
 
+/**
+ * Handler for GET requests.
+ * 
+ */
 public class GetQueryHandler extends QueryHandler<GetQuery>
 {
+	/**
+	 * {@link QueryHandler#execute(DBCollection)}
+	 */
 	@Override
 	protected Set<DBObject> execute(DBCollection p_dbCollection)
 	{

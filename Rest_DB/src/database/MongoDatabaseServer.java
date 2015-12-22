@@ -1,19 +1,20 @@
 package database;
 
 import java.net.UnknownHostException;
-import java.util.HashSet;
 
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
 import general.Constants;
-import queries.types.Query;
 
+/** 
+ * Represents the MongoDB server
+ * 
+ */
 public class MongoDatabaseServer
 {
+	/** The MongoClient */
 	private MongoClient m_mongoClient = null;
 	
 	/** Nullary Constructor */
@@ -142,21 +143,21 @@ public class MongoDatabaseServer
 //    	
 //    	return results;
 //    }
-    
-    public HashSet<DBObject> doQuery(Query p_query)
-    {
-    	DBCollection dbCollection = getDBCollection(p_query.getDatabaseName(), p_query.getCollectionName());
-    	DBCursor dbCursor = dbCollection.find(p_query.getQueryValues());
-    	
-    	HashSet<DBObject> results = new HashSet<DBObject>();
-    	
-    	while(dbCursor.hasNext())
-    	{
-    		DBObject dbObject = dbCursor.next();
-    		dbObject.removeField(Constants.ID_KEY);
-    		results.add(dbObject);
-    	}
-    	
-    	return results;
-    }
+//    
+//    public HashSet<DBObject> doQuery(Query p_query)
+//    {
+//    	DBCollection dbCollection = getDBCollection(p_query.getDatabaseName(), p_query.getCollectionName());
+//    	DBCursor dbCursor = dbCollection.find(p_query.getQueryValues());
+//    	
+//    	HashSet<DBObject> results = new HashSet<DBObject>();
+//    	
+//    	while(dbCursor.hasNext())
+//    	{
+//    		DBObject dbObject = dbCursor.next();
+//    		dbObject.removeField(Constants.ID_KEY);
+//    		results.add(dbObject);
+//    	}
+//    	
+//    	return results;
+//    }
 }
