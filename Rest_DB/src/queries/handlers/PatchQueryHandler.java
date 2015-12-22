@@ -16,9 +16,6 @@ import queries.types.PatchQuery;
  */
 public class PatchQueryHandler extends UpdateQueryHandler<PatchQuery>
 {
-	/**
-	 * {@link QueryHandler#execute(DBCollection)}
-	 */
 	@Override
 	protected Set<DBObject> execute(DBCollection p_dbCollection) 
 	{

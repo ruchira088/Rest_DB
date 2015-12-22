@@ -13,9 +13,6 @@ import queries.types.PutQuery;
  */
 public class PutQueryHandler extends UpdateQueryHandler<PutQuery>
 {
-	/**
-	 * {@link QueryHandler#execute(DBCollection)}
-	 */
 	@Override
 	protected Set<DBObject> execute(DBCollection p_dbCollection) 
 	{

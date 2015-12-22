@@ -13,9 +13,6 @@ import queries.types.PostQuery;
  */
 public class PostQueryHandler extends DataQueryHandler<PostQuery>
 {
-	/**
-	 * {@link QueryHandler#execute(DBCollection)}
-	 */
 	@Override
 	protected Set<DBObject> execute(DBCollection p_dbCollection)
 	{

@@ -16,5 +16,6 @@ public class Constants
     
     public static final String SELECTOR_KEY = "select";
     
+    /** The PATCH HTTP method name */
     public static final String PATCH_METHOD = "PATCH";
 }

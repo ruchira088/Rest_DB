@@ -16,9 +16,6 @@ import queries.types.GetQuery;
  */
 public class GetQueryHandler extends QueryHandler<GetQuery>
 {
-	/**
-	 * {@link QueryHandler#execute(DBCollection)}
-	 */
 	@Override
 	protected Set<DBObject> execute(DBCollection p_dbCollection)
 	{

@@ -22,9 +22,16 @@ import queries.types.PostQuery;
 import queries.types.PutQuery;
 import queries.types.Query;
 
+/**
+ * Handles requests from clients.
+ *
+ */
 @WebServlet("/database/*")
 public class DatabaseRequest extends HttpServlet 
 {
+	/** Serial Version UID */
+	private static final long serialVersionUID = -5182371201498622413L;
+
 	@Override
 	protected void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
 			throws ServletException, IOException 
@@ -44,6 +51,19 @@ public class DatabaseRequest extends HttpServlet
 		createResponse(p_response, new PutQuery(p_request));
 	}
 	
+	/**
+	 * Handles PATCH requests.
+	 * 
+	 * @param p_request
+	 * 	The {@link HttpServletRequest} object that contains the request the client made of the servlet
+	 * @param p_response
+	 * 	The {@link HttpServletResponse} object that contains the response the servlet returns to the client
+	 * 
+	 * @throws ServletException
+	 * 	If the request for the PATCH cannot be handled
+	 * @throws IOException
+	 * 	If an input or output error occurs while the servlet is handling the PATCH request
+	 */
 	protected void doPatch(HttpServletRequest p_request, HttpServletResponse p_response) throws ServletException, IOException 
 	{
 		createResponse(p_response, new PatchQuery(p_request));
@@ -59,9 +79,19 @@ public class DatabaseRequest extends HttpServlet
 			default:
 				super.service(p_request, p_response);
 		}
-
 	}
 
+	/**
+	 * Creates the response from the query.
+	 * 
+	 * @param p_response
+	 * 	The {@link HttpServletResponse} object that contains the response the servlet returns to the client
+	 * @param p_query
+	 * 	The {@link Query}
+	 * 
+	 * @throws IOException
+	 * 	If an input or output exception occurs
+	 */
 	private void createResponse(HttpServletResponse p_response, Query p_query) throws IOException 
 	{
 		QueryHandler<?> queryHandler = QueryHandler.getQueryHandler(p_query);
@@ -84,6 +114,15 @@ public class DatabaseRequest extends HttpServlet
 		printWriter.flush();
 	}
 	
+	/**
+	 * Formats the results.
+	 * 
+	 * @param p_results
+	 * 	{@link Set} containing the results.
+	 * 
+	 * @return
+	 * 	{@link String} of the formatted results.
+	 */
 	private String formatResults(Set<DBObject> p_results)
 	{
 		StringBuilder resultsBuilder = new StringBuilder();
