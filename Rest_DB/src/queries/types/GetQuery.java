@@ -1,7 +1,5 @@
 package queries.types;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import com.mongodb.BasicDBObject;
@@ -43,9 +41,7 @@ public class GetQuery extends Query
 	
 	protected BasicDBObject createBasicDBObject(HttpServletRequest p_request) 
 	{	
-		Map<String, String[]> parameterMap = p_request.getParameterMap();
-
-		return DBUtils.createBasicDBObject(parameterMap);
+		return DBUtils.createBasicDBObject(p_request.getParameterMap());
 	}
 	
 	@Override

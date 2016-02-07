@@ -19,16 +19,23 @@ public abstract class UpdateQueryHandler<T extends UpdateQuery> extends DataQuer
 	 * Initializes the object.
 	 */
 	private void init() 
-	{
-		m_selectorObject = new BasicDBObject();
-		
+	{		
 		Set<String> updateSelectors = getQuery().getUpdateSelectors();
-		BasicDBObject queryValues = getQuery().getQueryValues();
 		
-		for(String key: updateSelectors)
+		if(!updateSelectors.isEmpty())
 		{
-			m_selectorObject.put(key, queryValues.get(key));
+			m_selectorObject = new BasicDBObject();
+			BasicDBObject queryValues = getQuery().getQueryValues();
+			
+			for(String key: updateSelectors)
+			{
+				m_selectorObject.put(key, queryValues.get(key));
+			}
+		} else
+		{
+			m_selectorObject = getQuery().getParameterMap();
 		}
+		
 	}
 	
 	/**
