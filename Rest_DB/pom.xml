@@ -6,6 +6,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<build>
+		<finalName>Rest_DB</finalName>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
