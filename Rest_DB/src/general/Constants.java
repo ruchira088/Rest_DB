@@ -18,4 +18,10 @@ public class Constants
     
     /** The PATCH HTTP method name */
     public static final String PATCH_METHOD = "PATCH";
+
+    public static final String DOCUMENT_KEY = "document";
+
+    public static final String RESULT_KEY = "result";
+
+    public static final String SUCCESS = "success";
 }

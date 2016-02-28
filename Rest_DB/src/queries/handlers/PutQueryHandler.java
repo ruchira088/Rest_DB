@@ -18,6 +18,6 @@ public class PutQueryHandler extends UpdateQueryHandler<PutQuery>
 	{
 		p_dbCollection.update(getSelectorObject(), getQuery().getQueryValues());
 		
-		return createSuccessResult();
+		return createSuccessResult(getQuery().getQueryValues());
 	}
 }

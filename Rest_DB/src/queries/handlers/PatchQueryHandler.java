@@ -24,7 +24,7 @@ public class PatchQueryHandler extends UpdateQueryHandler<PatchQuery>
 		updatedDBObject.putAll((BSONObject)getQuery().getQueryValues());
 		p_dbCollection.update(dbObject, updatedDBObject);
 		
-		return createSuccessResult();
+		return createSuccessResult(updatedDBObject);
 	}
 
 }

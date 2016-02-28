@@ -18,6 +18,6 @@ public class PostQueryHandler extends DataQueryHandler<PostQuery>
 	{
 		p_dbCollection.insert(getQuery().getQueryValues());
 		
-		return createSuccessResult();
+		return createSuccessResult(getQuery().getQueryValues());
 	}
 }
